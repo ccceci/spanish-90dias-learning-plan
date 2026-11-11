@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spanish 90 Days | 每日学习打卡</title>
+<style>
+:root{--ink:#202a35;--muted:#687586;--line:#e5e9ef;--paper:#f6f8fb;--blue:#315f83;--green:#39745c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:#fff;border-bottom:1px solid var(--line);padding:28px 20px}
+.wrap{max-width:980px;margin:auto}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--blue);font-weight:700}
+h1{font-size:clamp(27px,5vw,40px);line-height:1.15;margin:8px 0}p{margin:6px 0;color:var(--muted)}
+main{padding:24px 20px 56px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.card,.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.stat strong{display:block;font-size:27px;font-weight:700}.stat span{font-size:13px;color:var(--muted)}
+.progress{height:9px;background:#edf1f5;border-radius:20px;overflow:hidden;margin-top:10px}.bar{height:100%;background:var(--green);width:0}
+.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.panel h2{font-size:19px;margin:0 0 12px}
+select,input,textarea,button{font:inherit}select,input,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:white;color:var(--ink)}
+label{display:block;font-size:13px;color:var(--muted);margin:12px 0 5px}
+.tasks{display:grid;gap:10px;margin:14px 0}.task{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:10px}.task input{width:18px;height:18px;accent-color:var(--green)}
+button{border:0;border-radius:10px;background:var(--blue);color:white;padding:11px 16px;cursor:pointer;font-weight:650;margin-top:12px}
+button.secondary{background:#edf2f6;color:var(--ink);margin-left:7px}
+.small{font-size:12px;color:var(--muted)}.week{padding:10px 0;border-bottom:1px solid var(--line)}.week:last-child{border:0}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:12px}
+@media(max-width:700px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:span 2}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">MEXICAN SPANISH · 90-DAY JOURNEY</div>
+<h1>Spanish 90 Days</h1>
+<p>每天一点点，练习在墨西哥生活与工作的西班牙语。</p>
+</div></header>
+<main class="wrap">
+<section class="stats">
+<div class="card stat"><span>已完成天数</span><strong id="done">0 / 90</strong><div class="progress"><div class="bar" id="bar"></div></div></div>
+<div class="card stat"><span>总体完成率</span><strong id="percent">0%</strong><span>按每日打卡计算</span></div>
+<div class="card stat"><span>当前连续打卡</span><strong id="streak">0 天</strong><span>连续完成的日历天数</span></div>
+</section>
+<div class="layout">
+<section class="panel">
+<h2>今日学习打卡</h2>
+<label for="day">选择学习日（第 1–90 天）</label>
+<select id="day"></select>
+<div class="small" id="topic"></div>
+<div class="tasks" id="tasks">
+<label class="task"><input type="checkbox" value="vocab"> 词汇练习 · 15 分钟</label>
+<label class="task"><input type="checkbox" value="listen"> 听力练习 · 20 分钟</label>
+<label class="task"><input type="checkbox" value="speak"> 口语练习 · 20 分钟</label>
+<label class="task"><input type="checkbox" value="grammar"> 句型 / 语法 · 15 分钟</label>
+<label class="task"><input type="checkbox" value="review"> 复习与回顾 · 5–20 分钟</label>
+</div>
+<label for="minutes">今天学习了多少分钟？</label><input id="minutes" type="number" min="0" max="600" placeholder="例如：75">
+<label for="rating">今天掌握程度</label><select id="rating"><option value="">请选择</option><option>很好</option><option>一般</option><option>需要复习</option></select>
+<label for="notes">笔记 / 不懂的地方</label><textarea id="notes" rows="3" placeholder="记录今天学到的表达或遇到的问题……"></textarea>
+<button id="save">保存今天的记录</button><button class="secondary" id="clear">清空本日记录</button>
+<p class="small">记录保存在当前浏览器中。更换浏览器或设备时不会自动同步。</p>
+</section>
+<aside class="panel">
+<h2>12 周学习路线</h2>
+<div id="roadmap"></div>
+<p class="small">每周 6 天学习，第 7 天复习。第 13 周用于完成最后 6 天并进行综合复习。</p>
+</aside>
+</div>
+</main>
+<footer>¡Vamos! 90 días, paso a paso. · Learn Spanish. Live in Mexico.</footer>
+<script>
+const topics=[
+"问候与自我介绍","数字、时间与日期","日常作息与动词","餐饮与点餐",
+"购物与价格","交通与问路","住房与家庭","社交与邀约",
+"职场沟通","过去事件与经历","健康与未来计划","综合复习与实战"
+];
+const day=document.getElementById('day'), keys=['vocab','listen','speak','grammar','review'];
+for(let i=1;i<=90;i++){let o=document.createElement('option');o.value=i;o.textContent=`第 ${i} 天`;day.appendChild(o)}
+const storeKey='spanish90days-v1';
+let data={};try{data=JSON.parse(localStorage.getItem(storeKey)||'{}')}catch(e){}
+function topicFor(n){return topics[Math.min(11,Math.floor((n-1)/7))]}
+function renderDay(){let n=+day.value,r=data[n]||{};document.getElementById('topic').textContent='本阶段主题：'+topicFor(n);
+document.querySelectorAll('#tasks input').forEach(x=>x.checked=!!(r.tasks||[]).includes(x.value));
+document.getElementById('minutes').value=r.minutes||'';document.getElementById('rating').value=r.rating||'';document.getElementById('notes').value=r.notes||''}
+function isDone(r){return r&&keys.every(k=>(r.tasks||[]).includes(k))}
+function renderStats(){let completed=Object.values(data).filter(isDone).length;document.getElementById('done').textContent=`${completed} / 90`;document.getElementById('percent').textContent=Math.round(completed/90*100)+'%';document.getElementById('bar').style.width=(completed/90*100)+'%';
+let streak=0,d=new Date();for(let i=0;i<90;i++){let k=String(i+1);if(isDone(data[k]))streak++;else break}document.getElementById('streak').textContent=streak+' 天'}
+function save(){let n=day.value;data[n]={tasks:[...document.querySelectorAll('#tasks input:checked')].map(x=>x.value),minutes:document.getElementById('minutes').value,rating:document.getElementById('rating').value,notes:document.getElementById('notes').value,updated:new Date().toISOString()};localStorage.setItem(storeKey,JSON.stringify(data));renderStats();alert('已保存本日学习记录！')}
+document.getElementById('save').onclick=save;day.onchange=renderDay;
+document.getElementById('clear').onclick=()=>{if(confirm('确定清空这一天的记录吗？')){delete data[day.value];localStorage.setItem(storeKey,JSON.stringify(data));renderDay();renderStats()}};
+document.getElementById('roadmap').innerHTML=topics.map((t,i)=>`<div class="week"><strong>第 ${i+1} 周</strong><div>${t}</div></div>`).join('');
+renderDay();renderStats();
+</script>
+</body></html>
