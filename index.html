@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Spanish 90 Days | 每日学习打卡</title>
+<title>Spanish 90 Days | Daily Learning</title>
 <style>
-:root{--ink:#202a35;--muted:#687586;--line:#e5e9ef;--paper:#f6f8fb;--blue:#315f83;--green:#39745c}
+:root{--ink:#202a35;--muted:#687586;--line:#e5e9ef;--paper:#f6f8fb;--blue:#315f83;--green:#39745c;--soft:#edf3f7}
 *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 header{background:#fff;border-bottom:1px solid var(--line);padding:28px 20px}
-.wrap{max-width:980px;margin:auto}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--blue);font-weight:700}
+.wrap{max-width:1080px;margin:auto}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--blue);font-weight:700}
 h1{font-size:clamp(27px,5vw,40px);line-height:1.15;margin:8px 0}p{margin:6px 0;color:var(--muted)}
 main{padding:24px 20px 56px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-.card,.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.card,.panel,.lesson-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
 .stat strong{display:block;font-size:27px;font-weight:700}.stat span{font-size:13px;color:var(--muted)}
 .progress{height:9px;background:#edf1f5;border-radius:20px;overflow:hidden;margin-top:10px}.bar{height:100%;background:var(--green);width:0}
-.layout{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.panel h2{font-size:19px;margin:0 0 12px}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:start}.panel h2{font-size:19px;margin:0 0 12px}
 select,input,textarea,button{font:inherit}select,input,textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px;background:white;color:var(--ink)}
 label{display:block;font-size:13px;color:var(--muted);margin:12px 0 5px}
 .tasks{display:grid;gap:10px;margin:14px 0}.task{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--line);border-radius:10px}.task input{width:18px;height:18px;accent-color:var(--green)}
@@ -22,69 +22,173 @@ button{border:0;border-radius:10px;background:var(--blue);color:white;padding:11
 button.secondary{background:#edf2f6;color:var(--ink);margin-left:7px}
 .small{font-size:12px;color:var(--muted)}.week{padding:10px 0;border-bottom:1px solid var(--line)}.week:last-child{border:0}
 footer{text-align:center;padding:20px;color:var(--muted);font-size:12px}
-@media(max-width:700px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:span 2}}
+.lesson{margin-top:18px}.lesson h2{margin-bottom:5px}.lesson-intro{margin-bottom:14px}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.lesson-card h3{font-size:16px;margin:0 0 10px}.lesson-card p{color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;padding:8px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:650}
+.phrase{padding:9px 0;border-bottom:1px solid var(--line)}.phrase:last-child{border:0}
+.dialogue{background:var(--soft);padding:14px;border-radius:12px}.dialogue p{margin:7px 0;color:var(--ink)}
+.quiz-question{padding:12px 0;border-bottom:1px solid var(--line)}.quiz-question:last-child{border:0}
+.quiz-question label{display:flex;align-items:center;gap:8px;margin:8px 0;color:var(--ink);font-size:14px}.quiz-question input{width:auto}
+.feedback{font-size:13px;font-weight:650;margin-top:5px}.correct{color:var(--green)}.incorrect{color:#a33}
+.lesson-placeholder{background:#fff;border:1px dashed #cbd5df;border-radius:14px;padding:18px;margin-top:16px}
+@media(max-width:760px){.layout,.lesson-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:span 2}}
 </style>
 </head>
 <body>
 <header><div class="wrap">
 <div class="eyebrow">MEXICAN SPANISH · 90-DAY JOURNEY</div>
 <h1>Spanish 90 Days</h1>
-<p>每天一点点，练习在墨西哥生活与工作的西班牙语。</p>
+<p>Learn a little every day. Build Spanish for life and work in Mexico.</p>
 </div></header>
 <main class="wrap">
 <section class="stats">
-<div class="card stat"><span>已完成天数</span><strong id="done">0 / 90</strong><div class="progress"><div class="bar" id="bar"></div></div></div>
-<div class="card stat"><span>总体完成率</span><strong id="percent">0%</strong><span>按每日打卡计算</span></div>
-<div class="card stat"><span>当前连续打卡</span><strong id="streak">0 天</strong><span>连续完成的日历天数</span></div>
+<div class="card stat"><span>Completed days</span><strong id="done">0 / 90</strong><div class="progress"><div class="bar" id="bar"></div></div></div>
+<div class="card stat"><span>Overall progress</span><strong id="percent">0%</strong><span>Based on completed daily checklists</span></div>
+<div class="card stat"><span>Learning streak</span><strong id="streak">0 days</strong><span>Completed days in plan order</span></div>
 </section>
 <div class="layout">
 <section class="panel">
-<h2>今日学习打卡</h2>
-<label for="day">选择学习日（第 1–90 天）</label>
+<h2>Daily study tracker</h2>
+<label for="day">Choose a study day (Day 1–90)</label>
 <select id="day"></select>
 <div class="small" id="topic"></div>
 <div class="tasks" id="tasks">
-<label class="task"><input type="checkbox" value="vocab"> 词汇练习 · 15 分钟</label>
-<label class="task"><input type="checkbox" value="listen"> 听力练习 · 20 分钟</label>
-<label class="task"><input type="checkbox" value="speak"> 口语练习 · 20 分钟</label>
-<label class="task"><input type="checkbox" value="grammar"> 句型 / 语法 · 15 分钟</label>
-<label class="task"><input type="checkbox" value="review"> 复习与回顾 · 5–20 分钟</label>
+<label class="task"><input type="checkbox" value="vocab"> Vocabulary practice · 15 min</label>
+<label class="task"><input type="checkbox" value="listen"> Listening practice · 20 min</label>
+<label class="task"><input type="checkbox" value="speak"> Speaking practice · 20 min</label>
+<label class="task"><input type="checkbox" value="grammar"> Grammar and sentence patterns · 15 min</label>
+<label class="task"><input type="checkbox" value="review"> Review · 5–20 min</label>
 </div>
-<label for="minutes">今天学习了多少分钟？</label><input id="minutes" type="number" min="0" max="600" placeholder="例如：75">
-<label for="rating">今天掌握程度</label><select id="rating"><option value="">请选择</option><option>很好</option><option>一般</option><option>需要复习</option></select>
-<label for="notes">笔记 / 不懂的地方</label><textarea id="notes" rows="3" placeholder="记录今天学到的表达或遇到的问题……"></textarea>
-<button id="save">保存今天的记录</button><button class="secondary" id="clear">清空本日记录</button>
-<p class="small">记录保存在当前浏览器中。更换浏览器或设备时不会自动同步。</p>
+<label for="minutes">How many minutes did you study today?</label><input id="minutes" type="number" min="0" max="600" placeholder="Example: 75">
+<label for="rating">How well did you understand today's lesson?</label><select id="rating"><option value="">Choose one</option><option>Very well</option><option>Okay</option><option>Need more practice</option></select>
+<label for="notes">Notes / Questions</label><textarea id="notes" rows="3" placeholder="Write a new expression or a question..."></textarea>
+<button id="save">Save today's progress</button><button class="secondary" id="clear">Clear this day</button>
+<p class="small">Your progress is saved in this browser. It does not automatically sync across browsers or devices.</p>
 </section>
 <aside class="panel">
-<h2>12 周学习路线</h2>
+<h2>12-week learning roadmap</h2>
 <div id="roadmap"></div>
-<p class="small">每周 6 天学习，第 7 天复习。第 13 周用于完成最后 6 天并进行综合复习。</p>
+<p class="small">Study for 6 days each week. Use Day 7 for review. The final 6 days complete the 90-day plan.</p>
 </aside>
 </div>
+
+<section class="panel lesson" id="lesson">
+<h2 id="lessonTitle">Day 1 — Introductions and Personal Information</h2>
+<p class="lesson-intro" id="lessonGoal">Goal: Introduce yourself and talk about where you live and what you do.</p>
+<div id="lessonContent"></div>
+</section>
 </main>
-<footer>¡Vamos! 90 días, paso a paso. · Learn Spanish. Live in Mexico.</footer>
+<footer>¡Vamos! 90 days, paso a paso. · Learn Spanish. Live in Mexico.</footer>
 <script>
 const topics=[
-"问候与自我介绍","数字、时间与日期","日常作息与动词","餐饮与点餐",
-"购物与价格","交通与问路","住房与家庭","社交与邀约",
-"职场沟通","过去事件与经历","健康与未来计划","综合复习与实战"
+"Greetings and introductions","Numbers, time and dates","Daily routines and verbs","Food and ordering",
+"Shopping and prices","Transport and directions","Home and family","Social life and invitations",
+"Workplace communication","Past events and experiences","Health and future plans","Review and real-life practice"
 ];
 const day=document.getElementById('day'), keys=['vocab','listen','speak','grammar','review'];
-for(let i=1;i<=90;i++){let o=document.createElement('option');o.value=i;o.textContent=`第 ${i} 天`;day.appendChild(o)}
+for(let i=1;i<=90;i++){let o=document.createElement('option');o.value=i;o.textContent=`Day ${i}`;day.appendChild(o)}
 const storeKey='spanish90days-v1';
 let data={};try{data=JSON.parse(localStorage.getItem(storeKey)||'{}')}catch(e){}
 function topicFor(n){return topics[Math.min(11,Math.floor((n-1)/7))]}
-function renderDay(){let n=+day.value,r=data[n]||{};document.getElementById('topic').textContent='本阶段主题：'+topicFor(n);
+function renderDay(){let n=+day.value,r=data[n]||{};document.getElementById('topic').textContent='Current topic: '+topicFor(n);
 document.querySelectorAll('#tasks input').forEach(x=>x.checked=!!(r.tasks||[]).includes(x.value));
-document.getElementById('minutes').value=r.minutes||'';document.getElementById('rating').value=r.rating||'';document.getElementById('notes').value=r.notes||''}
+document.getElementById('minutes').value=r.minutes||'';document.getElementById('rating').value=r.rating||'';document.getElementById('notes').value=r.notes||'';
+renderLesson(n)}
 function isDone(r){return r&&keys.every(k=>(r.tasks||[]).includes(k))}
 function renderStats(){let completed=Object.values(data).filter(isDone).length;document.getElementById('done').textContent=`${completed} / 90`;document.getElementById('percent').textContent=Math.round(completed/90*100)+'%';document.getElementById('bar').style.width=(completed/90*100)+'%';
-let streak=0,d=new Date();for(let i=0;i<90;i++){let k=String(i+1);if(isDone(data[k]))streak++;else break}document.getElementById('streak').textContent=streak+' 天'}
-function save(){let n=day.value;data[n]={tasks:[...document.querySelectorAll('#tasks input:checked')].map(x=>x.value),minutes:document.getElementById('minutes').value,rating:document.getElementById('rating').value,notes:document.getElementById('notes').value,updated:new Date().toISOString()};localStorage.setItem(storeKey,JSON.stringify(data));renderStats();alert('已保存本日学习记录！')}
+let streak=0;for(let i=1;i<=90;i++){if(isDone(data[String(i)]))streak++;else break}document.getElementById('streak').textContent=streak+' days'}
+function save(){let n=day.value;data[n]={tasks:[...document.querySelectorAll('#tasks input:checked')].map(x=>x.value),minutes:document.getElementById('minutes').value,rating:document.getElementById('rating').value,notes:document.getElementById('notes').value,updated:new Date().toISOString()};localStorage.setItem(storeKey,JSON.stringify(data));renderStats();alert('Today’s progress has been saved!')}
 document.getElementById('save').onclick=save;day.onchange=renderDay;
-document.getElementById('clear').onclick=()=>{if(confirm('确定清空这一天的记录吗？')){delete data[day.value];localStorage.setItem(storeKey,JSON.stringify(data));renderDay();renderStats()}};
-document.getElementById('roadmap').innerHTML=topics.map((t,i)=>`<div class="week"><strong>第 ${i+1} 周</strong><div>${t}</div></div>`).join('');
+document.getElementById('clear').onclick=()=>{if(confirm('Clear this day’s progress?')){delete data[day.value];localStorage.setItem(storeKey,JSON.stringify(data));renderDay();renderStats()}};
+document.getElementById('roadmap').innerHTML=topics.map((t,i)=>`<div class="week"><strong>Week ${i+1}</strong><div>${t}</div></div>`).join('');
+
+const dayOne = `
+<div class="lesson-grid">
+<section class="lesson-card">
+<h3>1. Vocabulary · 15 minutes</h3>
+<table><thead><tr><th>Spanish</th><th>Simple English</th></tr></thead><tbody>
+<tr><td>hola</td><td>hello</td></tr><tr><td>buenos días</td><td>good morning</td></tr>
+<tr><td>nombre</td><td>name</td></tr><tr><td>país</td><td>country</td></tr>
+<tr><td>ciudad</td><td>city</td></tr><tr><td>vivir</td><td>to live</td></tr>
+<tr><td>trabajar</td><td>to work</td></tr><tr><td>arquitecta</td><td>female architect</td></tr>
+<tr><td>empresa</td><td>company</td></tr><tr><td>mucho gusto</td><td>nice to meet you</td></tr>
+</tbody></table>
+</section>
+<section class="lesson-card">
+<h3>2. Useful expressions · 15 minutes</h3>
+<div class="phrase"><strong>¿Cómo te llamas?</strong><br><span class="small">What is your name?</span></div>
+<div class="phrase"><strong>Me llamo Ana.</strong><br><span class="small">My name is Ana.</span></div>
+<div class="phrase"><strong>¿De dónde eres?</strong><br><span class="small">Where are you from?</span></div>
+<div class="phrase"><strong>Soy de China.</strong><br><span class="small">I am from China.</span></div>
+<div class="phrase"><strong>¿Dónde vives?</strong><br><span class="small">Where do you live?</span></div>
+<div class="phrase"><strong>Vivo en Ciudad de México.</strong><br><span class="small">I live in Mexico City.</span></div>
+<div class="phrase"><strong>¿A qué te dedicas?</strong><br><span class="small">What do you do?</span></div>
+<div class="phrase"><strong>Soy arquitecta.</strong><br><span class="small">I am an architect.</span></div>
+</section>
+<section class="lesson-card">
+<h3>3. Grammar: SER · 15 minutes</h3>
+<p><strong>Use SER</strong> to talk about identity, nationality and profession.</p>
+<table><tbody><tr><td>Yo soy</td><td>I am</td></tr><tr><td>Tú eres</td><td>You are</td></tr><tr><td>Él / Ella es</td><td>He / She is</td></tr><tr><td>Nosotros somos</td><td>We are</td></tr></tbody></table>
+<p><strong>Examples</strong></p><p>Soy china. · I am Chinese.</p><p>Soy arquitecta. · I am an architect.</p><p>Ella es mexicana. · She is Mexican.</p>
+<p class="small">Remember: Use “soy” with “yo” (I). In Spanish, you can often leave out the subject pronoun.</p>
+</section>
+<section class="lesson-card">
+<h3>4. Listening · 15 minutes</h3>
+<p class="small">Read the dialogue slowly two times. Then cover the English meanings and read it again.</p>
+<div class="dialogue">
+<p><strong>A:</strong> ¡Hola! ¿Cómo te llamas?</p><p class="small">Hello! What is your name?</p>
+<p><strong>B:</strong> Me llamo Laura. ¿Y tú?</p><p class="small">My name is Laura. And you?</p>
+<p><strong>A:</strong> Me llamo Carlos. ¿De dónde eres?</p><p class="small">My name is Carlos. Where are you from?</p>
+<p><strong>B:</strong> Soy de China, pero vivo en México.</p><p class="small">I am from China, but I live in Mexico.</p>
+<p><strong>A:</strong> ¡Mucho gusto!</p><p class="small">Nice to meet you!</p>
+<p><strong>B:</strong> ¡Mucho gusto!</p>
+</div>
+</section>
+<section class="lesson-card">
+<h3>5. Speaking · 15 minutes</h3>
+<p>Say these sentences aloud. Replace the blank with your information.</p>
+<div class="phrase">Me llamo ______.</div><div class="phrase">Soy de ______.</div>
+<div class="phrase">Vivo en ______.</div><div class="phrase">Trabajo como arquitecta.</div>
+<p class="small">Say the four sentences three times. Try to speak without reading on the last try.</p>
+</section>
+<section class="lesson-card">
+<h3>6. Review · 5–10 minutes</h3>
+<ul><li>Read the 10 vocabulary words again.</li><li>Say the four introduction sentences from memory.</li><li>Review the forms soy, eres, es and somos.</li></ul>
+</section>
+</div>
+<section class="lesson-card" style="margin-top:12px">
+<h3>7. Mini test</h3>
+<p class="small">Choose one answer for each question. Select “Check answers” when you finish.</p>
+<div id="quiz"></div>
+<button type="button" id="checkQuiz">Check answers</button>
+<div id="quizResult" class="feedback" aria-live="polite"></div>
+</section>`;
+const futureLesson = `<div class="lesson-placeholder"><strong>Full lesson coming soon.</strong><p>This day is part of the 90-day roadmap. The vocabulary, grammar, listening, speaking and review activities will be added as the course is built.</p><p class="small">For now, use the daily tracker to record your study.</p></div>`;
+function renderLesson(n){
+ const title=document.getElementById('lessonTitle'),goal=document.getElementById('lessonGoal'),content=document.getElementById('lessonContent');
+ if(n===1){title.textContent='Day 1 — Introductions and Personal Information';goal.textContent='Beginner · A1 · Goal: Introduce yourself and talk about where you live and what you do.';content.innerHTML=dayOne;buildQuiz();}
+ else {title.textContent=`Day ${n} — ${topicFor(n)}`;goal.textContent='Follow the daily study tracker and review this week’s topic.';content.innerHTML=futureLesson;}
+}
+const quizItems=[
+ {q:'How do you say “I live in Mexico”?',opts:['Soy en México.','Vivo en México.','Estoy de México.'],a:1},
+ {q:'What does “¿De dónde eres?” mean?',opts:['What is your name?','Where do you work?','Where are you from?'],a:2},
+ {q:'Choose the correct sentence.',opts:['Soy arquitecta.','Estoy arquitecta.','Tengo arquitecta.'],a:0}
+];
+function buildQuiz(){
+ const host=document.getElementById('quiz');if(!host)return;
+ host.innerHTML=quizItems.map((q,i)=>`<div class="quiz-question"><strong>${i+1}. ${q.q}</strong>${q.opts.map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join('')}<div class="feedback" id="feedback${i}"></div></div>`).join('');
+ document.getElementById('checkQuiz').onclick=()=>{
+ let score=0,answered=0;
+ quizItems.forEach((q,i)=>{const selected=document.querySelector(`input[name="q${i}"]:checked`);const f=document.getElementById(`feedback${i}`);
+ if(!selected){f.textContent='Choose an answer.';f.className='feedback incorrect';return;}
+ answered++;if(Number(selected.value)===q.a){score++;f.textContent='Correct!';f.className='feedback correct';}
+ else{f.textContent='Try again. Correct answer: '+q.opts[q.a];f.className='feedback incorrect';}
+ });
+ document.getElementById('quizResult').textContent=answered===3?`Your score: ${score}/3`:`You answered ${answered}/3 questions.`;
+ };
+}
 renderDay();renderStats();
 </script>
-</body></html>
+</body>
+</html>
